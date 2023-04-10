@@ -1,0 +1,24 @@
+.todo-container {
+  width: 500px;
+  border: 2px solid rgb(0, 255, 0);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+  padding: 0 10px;
+  line-height: 1.8;
+}
+
+.todo-container:hover {
+  box-shadow: inset 0px 0px 3px rgb(0, 255, 0), 0px 0px 10px rgb(0, 255, 0);
+
+}
+
+.todo-icon {
+  display: flex;
+  cursor: pointer;
+}
+.task_done {
+  text-decoration: line-through;
+}
