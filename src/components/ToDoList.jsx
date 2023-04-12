@@ -2,32 +2,28 @@ import React, { useState } from "react";
 import ToDo from "./ToDo";
 import ToDoForm from "./ToDoForm";
 import "../styles/ToDoList.css";
-import { TiDelete } from "react-icons/ti";
-import { v4 as uuidv4 } from "uuid";
 
 const ToDoList = () => {
-  const [input, setInput] = useState("");
   const [task, setTask] = useState([]);
+  const [blurOutId, setBlurOutId] = useState(-1);
+  console.log(blurOutId);
 
   const handleDelete = (id) => {
-    setTask(task.filter((item) => item.id !== id));
+    setTimeout(() => {
+      setTask(task.filter((item) => item.id !== id));
+    }, 400);
+    setBlurOutId(-1);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && input !== "") {
-      const newTask = {
-        id: uuidv4(),
-        text: input,
-        done: false,
-      };
-      setTask([...task, newTask]);
-      setInput("");
-      console.log("vaciado");
-    }
+  const handleBlurOut = (id) => {
+    setBlurOutId(id);
+  };
+
+  const handleNewTask = (newTask) => {
+    setTask([...task, newTask]);
   };
 
   const handleTaskDone = (id) => {
-    console.log(id);
     setTask(
       task.map((doneItm) => {
         if (doneItm.id === id) {
@@ -40,15 +36,7 @@ const ToDoList = () => {
 
   return (
     <div className="todolist-container">
-      <div className="todoform-container">
-        <input
-          className="todoform-input"
-          value={input}
-          maxLength={120}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
+      <ToDoForm handleNewTask={handleNewTask} />
       {task.map((item) => (
         <ToDo
           key={item.id}
@@ -57,6 +45,8 @@ const ToDoList = () => {
           done={item.done}
           handleDelete={handleDelete}
           handleTaskDone={handleTaskDone}
+          handleBlurOut={handleBlurOut}
+          blurOutId={blurOutId}
         />
       ))}
     </div>

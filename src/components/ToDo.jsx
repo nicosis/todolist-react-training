@@ -2,22 +2,32 @@ import React from "react";
 import "../styles/ToDo.css";
 import { TiDelete } from "react-icons/ti";
 
-const ToDo = ({ id, text, done, handleTaskDone, handleDelete }) => {
+const ToDo = ({
+  id,
+  text,
+  done,
+  handleTaskDone,
+  handleDelete,
+  handleBlurOut,
+  blurOutId,
+}) => {
   return (
     <div
-      className={`todo-container blur-in-expand ${done ? "task_done" : ""}`}
+      className={`todo-container blur-in-expand ${done ? "task_done" : ""} 
+      ${blurOutId === id ? "blur-out-expand" : ""}`}
       key={id}
       onClick={(e) => {
         e.stopPropagation();
         handleTaskDone(id);
       }}
     >
-      <p key={id}>{text}</p>
+      <p>{text}</p>
       <span className="todo-icon">
         <TiDelete
           onClick={(e) => {
             e.stopPropagation();
             handleDelete(id);
+            handleBlurOut(id);
           }}
         />
       </span>
