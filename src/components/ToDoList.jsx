@@ -8,11 +8,9 @@ import { v4 as uuidv4 } from "uuid";
 const ToDoList = () => {
   const [input, setInput] = useState("");
   const [task, setTask] = useState([]);
-  console.log(task);
 
-  const handleDelete = (index) => {
-    setTask(task.filter((item) => item.id !== index));
-    console.log("deleted");
+  const handleDelete = (id) => {
+    setTask(task.filter((item) => item.id !== id));
   };
 
   const handleKeyDown = (e) => {
@@ -22,18 +20,18 @@ const ToDoList = () => {
         text: input,
         done: false,
       };
-      setTask([newTask, ...task]);
+      setTask([...task, newTask]);
       setInput("");
       console.log("vaciado");
     }
   };
 
-  const handleTaskDone = (index) => {
-    console.log(index);
+  const handleTaskDone = (id) => {
+    console.log(id);
     setTask(
-      task.map((doneItm, doneIdx) => {
-        if (doneIdx === index) {
-          return { ...doneItm, done: !doneItm.done };
+      task.map((doneItm) => {
+        if (doneItm.id === id) {
+          doneItm.done = !doneItm.done;
         }
         return doneItm;
       })
@@ -51,25 +49,15 @@ const ToDoList = () => {
           onKeyDown={handleKeyDown}
         />
       </div>
-      {task.map((item, index) => (
-        <div
-          className={`todo-container ${item.done ? "task_done" : ""}`}
-          key={index}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleTaskDone(index);
-          }}
-        >
-          <p key={index}>{item.text}</p>
-          <span className="todo-icon">
-            <TiDelete
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(item.id);
-              }}
-            />
-          </span>
-        </div>
+      {task.map((item) => (
+        <ToDo
+          key={item.id}
+          id={item.id}
+          text={item.text}
+          done={item.done}
+          handleDelete={handleDelete}
+          handleTaskDone={handleTaskDone}
+        />
       ))}
     </div>
   );
