@@ -5,7 +5,8 @@ import ToDoForm from "./ToDoForm";
 const ToDoList = () => {
   const [task, setTask] = useState([]);
   const [blurOutId, setBlurOutId] = useState(-1);
-  console.log(blurOutId);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
+  console.log(hoveredIndex);
 
   const handleDelete = (id) => {
     setTimeout(() => {
@@ -33,6 +34,10 @@ const ToDoList = () => {
     );
   };
 
+  const handleHoverDlt = (id) => {
+    setHoveredIndex(id);
+  };
+
   return (
     <div className="todolist-container">
       <ToDoForm handleNewTask={handleNewTask} />
@@ -46,8 +51,10 @@ const ToDoList = () => {
           handleTaskDone={handleTaskDone}
           handleBlurOut={handleBlurOut}
           blurOutId={blurOutId}
-        />
-      ))}
+          handleHoverDlt={handleHoverDlt}
+          hoveredIndex={hoveredIndex}
+          />
+          ))}
     </div>
   );
 };

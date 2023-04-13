@@ -10,6 +10,8 @@ const ToDo = ({
   handleDelete,
   handleBlurOut,
   blurOutId,
+  handleHoverDlt,
+  hoveredIndex,
 }) => {
   return (
     <div
@@ -20,16 +22,20 @@ const ToDo = ({
         e.stopPropagation();
         handleTaskDone(id);
       }}
+      onMouseEnter={() => handleHoverDlt(id)}
+      onMouseLeave={() => handleHoverDlt(-1)}
     >
       <p>{text}</p>
       <span className="todo-icon">
+        {(hoveredIndex === id) && (
         <TiDelete
           onClick={(e) => {
             e.stopPropagation();
             handleDelete(id);
             handleBlurOut(id);
           }}
-        />
+            />
+          )}
       </span>
     </div>
   );
